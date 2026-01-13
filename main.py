@@ -1,23 +1,31 @@
-casos = int(input(""))
+casos = int(input())
 
 resultados = []
 
 for i in range(casos):
-    entrada = input("")
+    entrada = input()
     pares = entrada.split(";")
 
     diccionario = {}
 
+    # 1. Inicializar todos los nodos en 0
     for par in pares:
-        clave = par.split(":")[0]
-        diccionario[clave] = 1
+        nodo = par.split(":")[0]
+        diccionario[nodo] = 0
 
+    # 2. Contar conexiones
     for par in pares:
         izquierda, derecha = par.split(":")
+
+        # conexiones salientes del nodo
+        diccionario[izquierda] += len(derecha)
+
+        # conexiones entrantes desde otros nodos
         for letra in derecha:
             if letra in diccionario:
                 diccionario[letra] += 1
 
+    # 3. Formatear salida
     linea = []
     for clave in sorted(diccionario):
         linea.append(f"{clave}: {diccionario[clave]}")
